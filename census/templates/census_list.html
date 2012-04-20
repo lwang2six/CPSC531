@@ -1,3 +1,11 @@
+{% load base_tags %}
+
+<link rel="stylesheet" type="text/css" media="all" href="{% STATIC_PREFIX %}/css/base.css" />
+
+
+<div class="blueback">
+
+
 <form action="" method="post">{% csrf_token %}
   <fieldset>
     {% for field in form %}
@@ -28,3 +36,9 @@
         {% endif %}
     </span>
 </div>
+
+
+
+
+</div>
+
