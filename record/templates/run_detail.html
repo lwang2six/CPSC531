@@ -1,0 +1,26 @@
+{% load record_tags %}
+
+{% if messages %}
+  {% for message in messages %}
+    {{message|safe}}
+  {% endfor %}
+{% endif %}
+
+Run Information:
+<br/>
+Run ID #: {{record.id}}
+<br/>
+Searched Fields:
+{{ record.selected_fields|process_fields }}
+<br/>
+Run Time:
+{{record.run_time|rstrip}} Seconds
+<br/>
+{% if result %}
+<ul>
+The Result:
+    {% for subset in result %}
+        <li>{{subset.fields|process_fields}} - {{subset.occurance}} - {{subset.weight}}</li>
+    {% endfor %}
+</ul>
+{% endif %}

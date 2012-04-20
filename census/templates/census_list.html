@@ -1,0 +1,30 @@
+<form action="" method="post">{% csrf_token %}
+  <fieldset>
+    {% for field in form %}
+       <label>{{field.label}}</label>{{field}}<br/>
+    {% endfor %}
+  </fieldset>
+  <input type="submit" name="submit" value="Submit"/>
+</form>
+
+<br/>
+
+{% for person in census.object_list %}
+    {{person}}<br/>
+{% endfor %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if census.has_previous %}
+            <a href="?page={{ census.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ census.number }} of {{ census.paginator.num_pages }}.
+        </span>
+
+        {% if census.has_next %}
+            <a href="?page={{ census.next_page_number }}">next</a>
+        {% endif %}
+    </span>
+</div>

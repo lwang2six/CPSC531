@@ -1,0 +1,11 @@
+<ul>
+{% for record in records %}
+    <li>
+      <a href="/records/{{record.id}}/">
+        Run ID#: {{record.id}}
+        Run Information:
+            Selected Fields - {{record.selected_fields}}
+      </a>
+    </li>
+{% endfor %}
+</ul>
