@@ -9,7 +9,7 @@ else:
     filename = __file__
 PROJECT_PATH = os.path.abspath(os.path.dirname(filename))
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 CSRF_COOKIE_SECURE = False
 SESSION_COOKIE_SECURE   = False

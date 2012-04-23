@@ -27,7 +27,7 @@ def census_data(request, p_name=''):
     form = CensusSearchForm()
     template = 'census_list.html'
     if p_name:
-        if p_name not in ['person', 'work', 'education']:
+        if p_name not in ['person', 'workclass', 'education']:
             messages.info(request, 'No such page')
             return HttpResponseRedirect('/census/')
         template = '%s.html' % p_name
