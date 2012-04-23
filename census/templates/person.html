@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content"> 
+  <h2 id="pageName">Person Data Table</h2> 
+</div> 
+<!--end content --> <!--   {{person.education}} "\nsp" {{work.cl}}  look at models.py  rows per page ==> views.py  (Paginator object)
+         This next for can be in another html file and href it-->
+<table>
+<tr> 
+<td>ID</td><td>AGE</td> <td>MARITAL STATUS</td><td>RELATIONSHIP</td><td>SEX</td><td>RACE</td><td>COUNTRY</td>
+</tr>
+{% for person in census.object_list %}
+    <tr>
+    <td>{{person.census_person_id}}</td> <td>{{person.age}}</td> <td>{{person.marital_status}} </td>
+    <td>{{person.relationship}}</td> <td>{{person.sex}}</td> <td>{{person.race}} </td> <td>{{person.native_country}} </td>
+  </tr>
+ <!--   <tr>{{person}} </tr><br/>  -->
+{% endfor %}
+</table>
+{% endblock content %}
+

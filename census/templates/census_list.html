@@ -1,44 +1,18 @@
-{% load base_tags %}
+{% extends "base.html" %}
 
-<link rel="stylesheet" type="text/css" media="all" href="{% STATIC_PREFIX %}/css/base.css" />
-
-
-<div class="blueback">
-
-
-<form action="" method="post">{% csrf_token %}
+{% block content %}
+<div class="content"> 
+  <h2 id="pageName">Selection Criteria for the Apriori Algorithm</h2> 
+</div> 
+<!--end content --> 
+<div class="content1"> 
+ <form action="" method="post">{% csrf_token %}
   <fieldset>
     {% for field in form %}
-       <label>{{field.label}}</label>{{field}}<br/>
+       <label class="{{field.id_for_label}}_lbl">{{field.label}}</label>{{field}}<br/>
     {% endfor %}
   </fieldset>
   <input type="submit" name="submit" value="Submit"/>
 </form>
-
-<br/>
-
-{% for person in census.object_list %}
-    {{person}}<br/>
-{% endfor %}
-
-<div class="pagination">
-    <span class="step-links">
-        {% if census.has_previous %}
-            <a href="?page={{ census.previous_page_number }}">previous</a>
-        {% endif %}
-
-        <span class="current">
-            Page {{ census.number }} of {{ census.paginator.num_pages }}.
-        </span>
-
-        {% if census.has_next %}
-            <a href="?page={{ census.next_page_number }}">next</a>
-        {% endif %}
-    </span>
 </div>
-
-
-
-
-</div>
-
+{% endblock %}
