@@ -10,8 +10,8 @@ admin.autodiscover()
 urlpatterns = patterns('',
 
     (r'^admin/', include(admin.site.urls)),
-    (r'^', include('census.urls')),
     (r'^', include('record.urls')),
+    (r'^', include('census.urls')),
 
 )
 

@@ -1,5 +1,7 @@
+{% extends "base.html" %}
 {% load record_tags %}
 
+{% block content %}
 {% if messages %}
   {% for message in messages %}
     {{message|safe}}
@@ -20,7 +22,15 @@ Run Time:
 <ul>
 The Result:
     {% for subset in result %}
+        {{subset.fields}}
         <li>{{subset.fields|process_fields}} - {{subset.occurance}} - {{subset.weight}}</li>
     {% endfor %}
 </ul>
 {% endif %}
+{% endblock content %}
+
+{% block pagination %}
+  {% with record as object %}
+    {% include "pagination.html" %}
+  {% endwith%}
+{% endblock %}

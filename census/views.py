@@ -12,14 +12,23 @@ from apriori.utils import *
 from census.models import *
 from census.forms import *
 
-def index(request):
-    return direct_to_template(request, 'index.html', {})
+def flatpage(request, p_name=None):
+    template = 'index.html'
+    if p_name:
+        if p_name == 'about':
+            template = '%s.html' % p_name
+        else:
+            raise Http404
 
+    return direct_to_template(request, template, {})
 
 #need to change to GET...THOUGHTS?
-def census_data(request):
+def census_data(request, p_name=''):
     form = CensusSearchForm()
-    
+    template = 'census_list.html'
+    if p_name:
+        template = '%s.html' % p_name
+
     census_list = Person.objects.all()
     paginator = Paginator(census_list, 200)
 
@@ -177,7 +186,7 @@ def census_data(request):
 
             return HttpResponseRedirect('%s%s' % (apriori(q, s, f), min_support))
 
-    return direct_to_template(request, 'census_list.html', {
+    return direct_to_template(request, template, {
                                        'census':census,
                                        'form':form,
                                       })

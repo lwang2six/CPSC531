@@ -10,7 +10,15 @@ from django.contrib import messages
 from record.models import *
 
 def record_run_list(request):
+
     records = Record.objects.all()
+    paginator = Paginator(records, 200)
+
+    try:
+        page = int(request.GET.get('page'))
+    except:
+        page = 1
+
     return direct_to_template(request, 'run_list.html', {'records':records})
 
 

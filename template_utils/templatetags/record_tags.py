@@ -6,7 +6,7 @@ register = Library()
 def process_fields(arg):
     s = ''
     try:
-        for i in arg[:-1].split(','):
+        for i in arg.split(','):
             key, value = i.split(':')
             s += '%s = %s, ' % (key.title(), value)
 
@@ -24,3 +24,11 @@ register.filter(paramfilter)
 def rstrip(value):
     return str(value).rstrip('0')
 register.filter(rstrip)
+
+@register.filter(name='dire')
+def dire(value):
+    return value
+register.filter(dire)
+
+
+

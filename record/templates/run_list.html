@@ -1,5 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
 <ul>
-{% for record in records %}
+{% for record in records.object_list %}
     <li>
       <a href="/records/{{record.id}}/">
         Run ID#: {{record.id}}
@@ -9,3 +12,11 @@
     </li>
 {% endfor %}
 </ul>
+{% endblock content %}
+
+{% block pagination %}
+  {% with records as object %}
+    {% include "pagination.html" %}
+  {% endwith%}
+{% endblock %}
+

@@ -14,9 +14,6 @@ class CensusSearchForm(forms.Form):
     
     edu = forms.MultipleChoiceField(label='Education', choices=[('','---Education---')]+[('ANY', 'All education level')]+[(v.id, v.level) for v in Education.objects.all()], widget=SelectMultiple(attrs={}), required=False)
 
-    #not sure the options, open field or a drop down choice list?
-    edu_num = forms.MultipleChoiceField(label='Education Years', choices=[('','---Education Years---')], required=False)
-    
     income = forms.MultipleChoiceField(label='Income', choices=[('', '---Income Level---'), ('>','> 50K'), ('<', '50K >=')], widget=SelectMultiple(attrs={}), required=False)
     occ = forms.MultipleChoiceField(label='Occupation', choices=[('','---Occupation---')]+[('ANY', 'All occupation')]+[(v.id, v.title) for v in Occupation.objects.all()], widget=SelectMultiple(attrs={}),required=False)
     cg = forms.IntegerField(label='Capital Gain', min_value=0, widget=TextInput(attrs={}), required=False)
