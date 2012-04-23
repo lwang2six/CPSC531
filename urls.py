@@ -15,8 +15,8 @@ urlpatterns = patterns('',
 
 )
 
-if settings.DEBUG:
-    urlpatterns = patterns('',
+
+urlpatterns = patterns('',
         (r'^%s(?P<path>.*)$' % settings.STATIC_PREFIX, 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
         url(r'^media/css/(?P<path>.*)$', 'django.views.static.serve', {'document_root': settings.MEDIA_ROOT + '/css/'}, name='css-root'),
     ) + urlpatterns
