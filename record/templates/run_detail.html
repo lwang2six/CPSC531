@@ -22,7 +22,6 @@ Run Time:
 <ul>
 The Result:
     {% for subset in result %}
-        {{subset.fields}}
         <li>{{subset.fields|process_fields}} - {{subset.occurance}} - {{subset.weight}}</li>
     {% endfor %}
 </ul>

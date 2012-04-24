@@ -2,7 +2,7 @@
 
 {% block content %}
 <ul>
-{% for record in records.object_list %}
+{% for record in records %}
     <li>
       <a href="/records/{{record.id}}/">
         Run ID#: {{record.id}}
@@ -15,8 +15,5 @@
 {% endblock content %}
 
 {% block pagination %}
-  {% with records as object %}
-    {% include "pagination.html" %}
-  {% endwith%}
 {% endblock %}
 
