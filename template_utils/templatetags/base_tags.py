@@ -14,8 +14,6 @@ def STATIC_PREFIX():
     return settings.STATIC_PREFIX
 register.simple_tag(STATIC_PREFIX)
 
-
-163-162
 @register.filter(name='get_pages')
 def get_pages(value):
     s = ''

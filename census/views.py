@@ -129,16 +129,18 @@ def census_data(request, p_name=''):
                     f.append('%s:%s,' % ('education', x.id if x else 'ANY'))
                 except: 
                     pass
-    
-            if request.POST.get('edu_num'):
-                q += (Q(education__education__education_num=request.POST.get('edu_num')),)
-                s += '%s:%s,' % ('edu_num', request.POST.get('edu_num'))
-                f.append('%s:%s,' % ('edu_num', request.POST.get('edu_num')))
 
             if request.POST.get('income'):
-                q += (Q(work__income=request.POST.get('income')),)
-                s += '%s:%s,' % ('income', 'True' if request.POST.get('income') else 'False')
-                f.append('%s:%s,' % ('income', 'True' if request.POST.get('income') else 'False'))
+                try:
+                    if request.POST.get('income') == '-1':
+                        s += 'income:ANY,'
+                        f.append('income:ANY,')
+                    else:
+                        q += (Q(work__income=request.POST.get('income')),)
+                        s += '%s:%s,' % ('income', 'True' if request.POST.get('income') else 'False')
+                        f.append('%s:%s,' % ('income', 'True' if request.POST.get('income') else 'False'))
+                except:
+                    pass
 
             if request.POST.get('occ'):
                 try:
@@ -153,19 +155,41 @@ def census_data(request, p_name=''):
                     pass
     
             if request.POST.get('cg') != '':
-                q += (Q(work__capital_gain=request.POST.get('cg')),)
-                s += '%s:%s,' % ('capital_gain', request.POST.get('cg'))
-                f.append('%s:%s,' % ('capital_gain', request.POST.get('cg')))
+                print request.POST.get('cg')
+                print dir(request.POST.get('cg'))
+                try:
+                    if request.POST.get('cg') == '-1':
+                        s += 'capital_gain:ANY,'
+                        f.append('capital_gain:ANY,')
+                    else:
+                        q += (Q(work__capital_gain=request.POST.get('cg')),)
+                        s += '%s:%s,' % ('capital_gain', request.POST.get('cg'))
+                        f.append('%s:%s,' % ('capital_gain', request.POST.get('cg')))
+                except:
+                    pass
     
             if request.POST.get('cl') != '':
-                q += (Q(work__capital_loss=request.POST.get('cl')),)
-                s += '%s:%s,' % ('capital_loss', request.POST.get('cl'))
-                f.append('%s:%s,' % ('capital_loss', request.POST.get('cl')))
-    
+                try:
+                    if request.POST.get('cl') == '-1':
+                        s += 'capital_loss:ANY,'
+                        f.append('capital_loss:ANY,')
+                    else:
+                        q += (Q(work__capital_loss=request.POST.get('cl')),)
+                        s += '%s:%s,' % ('capital_loss', request.POST.get('cl'))
+                        f.append('%s:%s,' % ('capital_loss', request.POST.get('cl')))
+                except:
+                    pass
             if request.POST.get('hpw') !=  '':
-                q += (Q(work__hours_per_week=request.POST.get('hpw')),)
-                s += '%s:%s,' % ('hours_per_week', request.POST.get('hpw'))
-                f.append('%s:%s,' % ('hours_per_week', request.POST.get('hpw')))
+                try:
+                    if request.POST.get('hpw') == '-1':
+                        s += 'hours_per_week:ANY,'
+                        f.append('hours_per_week:ANY,')
+                    else:
+                        q += (Q(work__hours_per_week=request.POST.get('hpw')),)
+                        s += '%s:%s,' % ('hours_per_week', request.POST.get('hpw'))
+                        f.append('%s:%s,' % ('hours_per_week', request.POST.get('hpw')))
+                except:
+                    pass
 
             if request.POST.get('wc'):
                 try:
@@ -178,6 +202,7 @@ def census_data(request, p_name=''):
                     f.append('%s:%s,' % ('workclass', x.id if x else 'ANY'))
                 except:
                     pass
+
             if request.POST.get('min_support'):
                 min_support = '?min_support='
     

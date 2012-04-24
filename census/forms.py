@@ -14,11 +14,11 @@ class CensusSearchForm(forms.Form):
     
     edu = forms.MultipleChoiceField(label='Education', choices=[('','---Education---')]+[('ANY', 'All education level')]+[(v.id, v.level) for v in Education.objects.all()], widget=SelectMultiple(attrs={}), required=False)
 
-    income = forms.MultipleChoiceField(label='Income', choices=[('', '---Income Level---'), ('>','> 50K'), ('<', '50K >=')], widget=SelectMultiple(attrs={}), required=False)
+    income = forms.MultipleChoiceField(label='Income', choices=[('', '---Income Level---'), ('ANY', 'All income'), ('>','> 50K'), ('<', '50K >=')], widget=SelectMultiple(attrs={}), required=False)
     occ = forms.MultipleChoiceField(label='Occupation', choices=[('','---Occupation---')]+[('ANY', 'All occupation')]+[(v.id, v.title) for v in Occupation.objects.all()], widget=SelectMultiple(attrs={}),required=False)
-    cg = forms.IntegerField(label='Capital Gain', min_value=0, widget=TextInput(attrs={}), required=False)
-    cl = forms.IntegerField(label='Capital Loss', min_value=0, widget=TextInput(attrs={}), required=False)
-    hpw = forms.IntegerField(label='Hours Per Week', min_value=0, max_value=168, widget=TextInput(attrs={}), required=False)
+    cg = forms.IntegerField(label='Capital Gain', min_value=-1, widget=TextInput(attrs={}), required=False)
+    cl = forms.IntegerField(label='Capital Loss', min_value=-1, widget=TextInput(attrs={}), required=False)
+    hpw = forms.IntegerField(label='Hours Per Week', min_value=-1, max_value=168, widget=TextInput(attrs={}), required=False)
     wc = forms.MultipleChoiceField(label='Work Class', choices=[('','---Work Class---')]+[('ANY', 'All workclass')]+[(v.id, v.title) for v in WorkClass.objects.all()], widget=SelectMultiple(attrs={}), required=False)
 
     min_support = forms.IntegerField(label='User Specified Minimum Support', min_value=0, max_value=14, widget=TextInput(attrs={}), required=False)
