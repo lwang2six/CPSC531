@@ -1,6 +1,4 @@
 import os
-import Image
-
 from django.template import Library
 from django.conf import settings
 
