@@ -13,7 +13,7 @@
 {% for person in census.object_list %}
     <tr>
     <td>{{person.census_person_id}}</td> <td>{{person.age}}</td> <td>{{person.marital_status}} </td>
-    <td>{{person.relationship}}</td> <td>{{person.sex}}</td> <td>{{person.race}} </td> <td>{{person.native_country}} </td>
+    <td>{{person.relationship}}</td> <td>{{person.get_sex_display}}</td> <td>{{person.race}} </td> <td>{{person.native_country}} </td>
   </tr>
  <!--   <tr>{{person}} </tr><br/>  -->
 {% endfor %}

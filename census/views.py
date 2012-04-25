@@ -15,7 +15,7 @@ from census.forms import *
 def flatpage(request, p_name=None):
     template = 'index.html'
     if p_name:
-        if p_name == 'about':
+        if p_name == 'about' or p_name == 'sitemap':
             template = '%s.html' % p_name
         else:
             raise Http404
@@ -217,4 +217,5 @@ def census_data(request, p_name=''):
     return direct_to_template(request, template, {
                                        'census':census,
                                        'form':form,
+                                       'c_page':page,
                                       })
