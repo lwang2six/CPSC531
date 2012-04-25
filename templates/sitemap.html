@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="content"> 
+  <h2 id="pageName">Site Map</h2> 
+  <p>
+  <h2 id="pageName">Welcome to the Apriori-based Census Data Mining Project</h2> 
+   <p>
+   
+   This site is a project developed for CPSC-531 (Advanced Database) at Cal State Fullerton by Nathan Reed
+   and Leo Wang to demonstrate the use of the Apriori Algorithm applied to census data that is found in one of 
+   the UC Irvine research databases.  <p>
+   
+   The UCI census data is currently simply 32,000 plus rows of 13 data elements.  The data is not normalized
+   and has primarily string values.  The database tables for this project were normalized into 3 primary tables - 
+   person (with ID as the primary key and foreign key to the other two tables), Work Class, and Education
+   Table.  The text fields were turned into integer values as foreign keys into what we termed as 'codes' tables.
+   This are prepended with the label of misc_*.  The use of integer/numeric values speeds up the compares in the 
+   Apriori algorithm because textual compares take more time. <p>
+   
+   The main census page provides choice boxes for 11 criteria and for entering the Minimum Support  value that
+   is used by the Apiori algorithm for determining the highest supported value.  There are ten Choice Boxes and 
+   three text boxes for entry (numeric values).  The Minimum Support value is numeric.  The Minimum Support 
+   must be less than the number of fields chosen for calculations. <p>
+   
+   The Person Table link outputs the data from the person table.  <p>
+   
+   The Work Class link outputs the data from the Work class table. <p>
+   
+   The Education link outputs the data from the Education table.  <p>
+   
+   There is a records link that displays the output from the user initiated runs. <p>
+   
+</div> 
+
+
+
+{% endblock content %}

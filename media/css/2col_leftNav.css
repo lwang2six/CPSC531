@@ -97,7 +97,14 @@ input{
 table
 {
     table-layout:fixed;
+	width: 100%;
 } 
+
+td{
+	border: 2px solid black;
+	text-align:center;
+	padding:5px;
+}
 /***********************************************/
 /* Layout Divs                                 */
 /***********************************************/
@@ -134,6 +141,11 @@ table
 	padding: 0 3% 0 0;
 	background:lightgray;
 }
+
+#pagination{
+  text-align: center;
+}
+
 #id_age{
 	position:absolute;
 	left:200px;
