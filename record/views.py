@@ -26,6 +26,7 @@ def record_run_detail(request, rid):
     record = get_object_or_404(Record,pk=rid)
     result = record.get_subsets().order_by('-weight', '-occurance')
 
+    min_support = None
     if request.GET.get('min_support'):
         try: 
             min_support = int(request.GET.get('min_support'))

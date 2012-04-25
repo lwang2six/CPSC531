@@ -1,17 +1,17 @@
 {% extends "base.html" %}
+{% load record_tags %}
 
 {% block content %}
-<ul>
+
+<table border="1">
+    <th>Run ID</th><th>Selected Fields</th>
 {% for record in records %}
-    <li>
-      <a href="/records/{{record.id}}/">
-        Run ID#: {{record.id}}
-        Run Information:
-            Selected Fields - {{record.selected_fields}}
-      </a>
-    </li>
+    <tr>
+        <td><a href="/records/{{record.id}}/">{{record.id}}</a></td>
+        <td><a href="/records/{{record.id}}/">{{record.selected_fields|process_fields}}</a></td>
+    </tr>
 {% endfor %}
-</ul>
+</table>
 {% endblock content %}
 
 {% block pagination %}

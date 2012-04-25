@@ -16,7 +16,7 @@ Searched Fields:
 {{ record.selected_fields|process_fields }}
 <br/>
 Run Time:
-{{record.run_time|rstrip}} Seconds
+{{record.run_time|rstrip}} Seconds &asymp; {% widthratio record.run_time 60 1 %} mins
 <br/>
 {% if result %}
 

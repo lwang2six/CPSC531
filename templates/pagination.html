@@ -2,7 +2,6 @@
 
 {% if object %}
 <div class="pagination">
-    <span class="step-links">
         {% if object.number != 1 %}
             <a href="?{%if min_support %}min_support={{min_support}}&{%endif%}page=1">First</a> |
         {% else %}
@@ -14,9 +13,7 @@
             Previous |
         {% endif %}
 
-        <span class="current">
-            <strong>{% if min_support %}{{ object|get_pages:min_support|safe }}{% else %}{{ object|get_pages|safe }}{% endif %}</strong> 
-        </span>
+        <strong>{% if min_support %}{{ object|get_pages:min_support|safe }}{% else %}{{ object|get_pages|safe }}{% endif %}</strong> 
 
         {% if object.has_next %}
             | <a href="?{%if min_support %}min_support={{min_support}}&{%endif%}page={{ object.next_page_number }}">Next</a>
@@ -28,6 +25,5 @@
         {% else %}
             | Last
         {% endif %}
-    </span>
 </div>
 {% endif %}
