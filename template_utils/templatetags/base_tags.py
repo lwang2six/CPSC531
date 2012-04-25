@@ -40,3 +40,4 @@ def get_pages(value):
     return s
 register.filter(get_pages)
 
+

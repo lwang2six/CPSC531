@@ -24,12 +24,23 @@ def record_run_list(request):
 
 def record_run_detail(request, rid):
     record = get_object_or_404(Record,pk=rid)
-    result = record.get_subsets().order_by('-weight')
+    result = record.get_subsets().order_by('-weight', '-occurance')
+
+    paginator = Paginator(result, 200)
+    try:
+        page = int(request.GET.get('page'))
+    except:
+        page = 1
+
+    try:
+        result = paginator.page(page)
+    except EmptyPage:
+        result = paginator.page(paginator.num_pages)
 
     if request.GET.get('min_support'):
         try: 
             min_support = int(request.GET.get('min_support'))
-            result = result.filter(weight__lte=min_support)
+            result = result.filter(weight=min_support)
         except:
             messages.info(request, 'Error with "User Minimum Support Value"')
             return HttpResponseRedirect(record.get_absolute_url())

@@ -1,5 +1,5 @@
 from django.template import Library
-
+from record.models import Subset
 register = Library()
 
 @register.filter(name='process_fields')
@@ -7,9 +7,9 @@ def process_fields(arg):
     s = ''
     try:
         for i in arg.split(','):
-            key, value = i.split(':')
-            s += '%s = %s, ' % (key.title(), value)
-
+            if i != '':
+                key, value = i.split(':')
+                s += '%s = %s, ' % (key.title(), value)
         return s[:-2].replace('_',' ')
     except:
         return arg
@@ -29,6 +29,4 @@ register.filter(rstrip)
 def dire(value):
     return value
 register.filter(dire)
-
-
 

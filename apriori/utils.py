@@ -48,8 +48,6 @@ def create_subset(person, record, fields):
 
     return True
 
-
-
 def create_subset2(person, record, search_fields, fields):
     temp = set()
     subset = set()
@@ -97,31 +95,23 @@ def create_subset2(person, record, search_fields, fields):
         else: #'workclass':
             s = 'w.workclass_id=%s' % person.work.workclass.id
             f = 'workclass:%s' % person.work.workclass.title
-        
-        temp = set()
-        for k in f_subset:
-            temp.add('%s,%s' % (k, f))
-
-        f_subset.add('%s' % f)
-        f_subset = f_subset.union(temp)
 
         temp = set()
 
         for j in subset:
-            temp.add('%s and %s' % (j, s))
+            temp.add(('%s and %s' % (j[0], s), '%s,%s' % (j[1],f)))
         
-        subset.add('%s' % s)
+        subset.add(('%s' % s, '%s' % f))
         subset = subset.union(temp)
 
     count = 0
-    f_subset = list(f_subset)
     for i in subset:
         try:
-            sub = Subset.objects.get(record=record, fields=f_subset[count])
+            sub = Subset.objects.get(record=record, fields=i[1])
         except:
-            raw_s = 'SELECT p.*, count(distinct p.census_person_id) AS total FROM census_person p, census_education e, census_work w where p.census_person_id=e.person_id and p.census_person_id=w.person_id and %s;' % i
+            raw_s = 'SELECT p.*, count(distinct p.census_person_id) AS total FROM census_person p, census_education e, census_work w where p.census_person_id=e.person_id and p.census_person_id=w.person_id and %s;' % i[0]
             p = Person.objects.raw(raw_s)
-            sub = Subset.objects.create(record=record, fields=f_subset[count], first_user=person, occurance=p[0].total, weight=len(f_subset[count].split(',')))
+            sub = Subset.objects.create(record=record, fields=i[1], first_user=person, occurance=int(p[0].total), weight=len(i[1].split(',')))
 
             if sub.weight > record.weight:
                 sub.record.weight = sub.weight
