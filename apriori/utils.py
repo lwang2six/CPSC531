@@ -131,9 +131,9 @@ def apriori(query_list, search_fields, fields_set):
         record.save()
         q = None
 
-        if len(query_list) == len(fields_set):
+        if query_list:
             for i in query_list:
-                q = q | i if q else i
+                q = q & i if q else i
 
         census = Person.objects.filter(q) if q else Person.objects.all()
 

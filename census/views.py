@@ -53,86 +53,101 @@ def census_data(request, p_name=''):
             s = ''
             f  = []
     
-            if request.POST.get('age'):
-                if request.POST.get('age') != 'ANY':
-                    q += (Q(age=request.POST.get('age')),)
-                s += '%s:%s,' % ('age', request.POST.get('age'))
-                f.append('%s:%s,' % ('age', request.POST.get('age')))
-
+            if request.POST.getlist('age'):
+                if 'ANY' not in request.POST.getlist('age'):
+                    q += (Q(age__in=request.POST.getlist('age')),)
+                for i in request.POST.getlist('age'):
+                    s += '%s:%s,' % ('age', i)
+                f.append('%s:%s,' % ('age', 'selected' if 'ANY' not in request.POST.getlist('age') else 'ANY' ))
             if request.POST.get('m_status'):
                 try:
-                    if request.POST.get('m_status') != 'ANY':
-                        m = Martial.objects.get(id=request.POST.get('m_status'))
-                        q += (Q(martial_status__id=m.id),)
+                    if 'ANY' not in request.POST.getlist('m_status'):
+                        m = Marital.objects.filter(id__in=request.POST.getlist('m_status'))
+                        q += (Q(martial_status__id__in=m.values('id')),)
+                        for i in m:
+                            s += '%s:%s,' % ('marital_status', i.status )
+                        f.append('%s:%s,' % ('marital_status', 'selected'))
                     else:
-                        m = None
-                    s += '%s:%s,' % ('marital_status', m.status if m else 'ANY')
-                    f.append('%s:%s,' % ('marital_status', m.id if m else 'ANY'))
+                        s += 'marital_status:ANY,'
+                        f.append('marital_status:ANY,')
                 except:
                     pass
     
             if request.POST.get('relation'):
                 try:
-                    if request.POST.get('relation') != 'ANY':
-                        x = Relationship.objects.get(id=request.POST.get('relation'))
-                        q += (Q(relationship__id=x.id),)
+                    if 'ANY' not in request.POST.getlist('relation'):
+                        x = Relationship.objects.filter(id__in=request.POST.getlist('relation'))
+                        q += (Q(relationship__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('relationship', x.type )
+                        f.append('%s:%s,' % ('relationship', 'selected'))
                     else:
                         x = None
-                    s += '%s:%s,' % ('relationship', x.type if x else 'ANY')
-                    f.append('%s:%s,' % ('relationship', x.id if x else 'ANY'))
+                        s += 'relationship:ANY,'
+                        f.append('relationship:ANY,')
                 except:
                     pass
-    
+
             if request.POST.get('sex'):
-                sex = x = request.POST.get('sex')
-                if sex != 'ANY':
-                    if sex == 'm':
-                        x = 'Male'
-                    else:
-                        x = 'Female' if sex == 'F' else 'Other'
-                    q += (Q(sex=request.POST.get('sex')),)
-                s += '%s:%s,' % ('sex', x)
-                f.append('%s:%s,' % ('sex', x[0]))
+                sex = x = request.POST.getlist('sex')
+                if 'ANY' not in sex:
+                    q += (Q(sex__in=sex),)
+                    for i in sex:
+                        if sex == 'm':
+                            x = 'Male'
+                        else:
+                            x = 'Female' if sex == 'F' else 'Other'
+                        s += '%s:%s,' % ('sex', x)
+                    f.append('%s:%s,' % ('sex', 'selected'))
+                else:
+                    s += 'sex:ANY,'
+                    f.append('sex:ANY,')
 
             if request.POST.get('race'):
                 try:
-                    if request.POST.get('race') != 'ANY':
-                        x = Race.objects.get(id=request.POST.get('race'))
-                        q += (Q(race__id=x.id),)
+                    if 'ANY' not in request.POST.getlist('race'):
+                        x = Race.objects.get(id__in=request.POST.getlist('race'))
+                        q += (Q(race__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('race', i.ethnicity)
+                        f.append('%s:%s,' % ('race', 'selected'))
                     else:
-                        x = None
-                    s += '%s:%s,' % ('race', x.ethnicity if x else 'ANY')
-                    f.append('%s:%s,' % ('race', x.id if x else 'ANY'))
+                        s += 'race:ANY,'
+                        f.append('race:ANY,')
                 except:
                     pass
     
             if request.POST.get('nc'):
                 try:
-                    if request.POST.get('nc') != 'ANY':
-                        x = Country.objects.get(id=request.POST.get('nc'))
-                        q += (Q(native_country__id=x.id),)
+                    if 'ANY' not in request.POST.getlist('nc'):
+                        x = Country.objects.filter(id__in=request.POST.getlist('nc'))
+                        q += (Q(native_country__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('native_country', i.name)
+                        f.append('%s:%s,' % ('native_country', 'selected'))
                     else:
-                        x = None
-                    s += '%s:%s,' % ('native_country', x.name if x else 'ANY')
-                    f.append('%s:%s,' % ('native_country', x.id if x else 'ANY'))
+                        s += '%s:%s,' % ('native_country', 'ANY')
+                        f.append('%s:%s,' % ('native_country', 'ANY'))
                 except:
                     pass
     
             if request.POST.get('edu'):
                 try:
-                    if request.POST.get('age') != 'ANY':
-                        x = Education.objects.get(id=request.POST.get('edu'))
-                        q += (Q(education__education__id=x.id),)
+                    if 'ANY' not in request.POST.getlist('edu'):
+                        x = Education.objects.filter(id__in=request.POST.getlist('edu'))
+                        q += (Q(education__education__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('education', i.level)
+                        f.append('%s:%s,' % ('education', 'selected'))
                     else:
-                        x = None
-                    s += '%s:%s,' % ('education', x.level if x else 'ANY')
-                    f.append('%s:%s,' % ('education', x.id if x else 'ANY'))
+                        s += '%s:%s,' % ('education', 'ANY')
+                        f.append('%s:%s,' % ('education','ANY'))
                 except: 
                     pass
 
             if request.POST.get('income'):
                 try:
-                    if request.POST.get('income') == '-1':
+                    if '-1' in request.POST.getlist('income'):
                         s += 'income:ANY,'
                         f.append('income:ANY,')
                     else:
@@ -144,19 +159,19 @@ def census_data(request, p_name=''):
 
             if request.POST.get('occ'):
                 try:
-                    if request.POST.get('occ') != 'ANY':
-                        x = Occupation.objects.get(id=request.POST.get('occ'))
-                        q += (Q(work__occupation__id=x.id),)
+                    if 'ANY' not in  request.POST.get('occ'):
+                        x = Occupation.objects.get(id__in=request.POST.getlist('occ'))
+                        q += (Q(work__occupation__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('occupation', i.title)
+                        f.append('%s:%s,' % ('occupation', 'selected'))
                     else:
-                        x = None
-                    s += '%s:%s,' % ('occupation', x.title if x else 'ANY')
-                    f.append('%s:%s,' % ('occupation', x.id if x else 'ANY'))
+                        s += '%s:%s,' % ('occupation', 'ANY')
+                        f.append('%s:%s,' % ('occupation', 'ANY'))
                 except:
                     pass
     
             if request.POST.get('cg') != '':
-                print request.POST.get('cg')
-                print dir(request.POST.get('cg'))
                 try:
                     if request.POST.get('cg') == '-1':
                         s += 'capital_gain:ANY,'
@@ -193,13 +208,15 @@ def census_data(request, p_name=''):
 
             if request.POST.get('wc'):
                 try:
-                    if request.POST.get('age') != 'ANY':
-                        x = Workclass.objects.get(id=request.POST.get('wc'))
-                        q += (Q(work__workclass__id=x.id),)
+                    if 'ANY' not in  request.POST.get('wc'):
+                        x = Workclass.objects.getlist(id__in=request.POST.getlist('wc'))
+                        q += (Q(work__workclass__id__in=x.values('id')),)
+                        for i in x:
+                            s += '%s:%s,' % ('workclass', i.title )  
+                        f.append('%s:%s,' % ('workclass', 'selected'))
                     else:
-                        x = None
-                    s += '%s:%s,' % ('workclass', x.title if x else 'ANY')  
-                    f.append('%s:%s,' % ('workclass', x.id if x else 'ANY'))
+                        s += '%s:%s,' % ('workclass', 'ANY')  
+                        f.append('%s:%s,' % ('workclass', 'ANY'))
                 except:
                     pass
 

@@ -17,7 +17,14 @@ def get_pages(value, arg=''):
     s = x = ''
     if arg:
         x = 'min_support=%s&' % arg
-    if int(value.paginator.num_pages)-int(value.number) > 3  and int(value.number) > 4 or int(value.number) -1 > 3 and int(value.number) < 4 or int(value.number) == 4:
+
+    if int(value.number) < 4:
+       for i in reversed(range(int(value.number))):
+                if int(value.number) == int(i):
+                    s += '<strong>%s</strong> ' % i
+                else:
+                    s += '<a href="?%spage=%s">%s</a> ' % (x, i+1, i+1)
+    elif int(value.paginator.num_pages)-int(value.number) > 3  and int(value.number) > 4 or int(value.number)-1 > 3 and int(value.number) < 4 or int(value.number) == 4:
         s = '1 ... <a href="?%spage=%s">%s</a> <strong>%s</strong> <a href="?page=%s">%s</a> ...%s' % (x, value.previous_page_number(), value.previous_page_number(), value.number, value.next_page_number(), value.next_page_number(), value.paginator.num_pages)  
      
     else:
