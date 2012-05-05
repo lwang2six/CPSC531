@@ -23,7 +23,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', 
-        'NAME': 'cen',                      
+        'NAME': 'census',                      
         'USER': 'root',                      
         'PASSWORD': '1234',                  
         'HOST': '',                      

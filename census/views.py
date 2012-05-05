@@ -19,7 +19,8 @@ def flatpage(request, p_name=None):
             template = '%s.html' % p_name
         else:
             raise Http404
-
+    if template == 'index.html':
+        return HttpResponseRedirect('/census/')
     return direct_to_template(request, template, {})
 
 #need to change to GET...THOUGHTS?
@@ -147,7 +148,7 @@ def census_data(request, p_name=''):
 
             if request.POST.get('income'):
                 try:
-                    if '-1' in request.POST.getlist('income'):
+                    if 'ANY' in request.POST.getlist('income'):
                         s += 'income:ANY,'
                         f.append('income:ANY,')
                     else:

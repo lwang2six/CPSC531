@@ -8,18 +8,21 @@
   {% endfor %}
 {% endif %}
 
-Run Information:
-<br/>
 Run ID #: {{record.id}}
-<br/>
+<p>
 Searched Fields:
-{{ record.selected_fields|process_fields }}
-<br/>
+<ul>
+{{ record.selected_fields|process_fields:5|safe }}
+<li style="visibility:hidden"></li>
+</ul>
+</p>
+
+<p>
 Run Time:
 {{record.run_time|rstrip}} Seconds &asymp; {% widthratio record.run_time 60 1 %} mins
-<br/>
-{% if result %}
+</p>
 
+{% if result %}
 The Result:
 <table border="1">
   <th>Fields</th><th>Occurrence</th><th>Weight</th>
